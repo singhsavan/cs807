@@ -1,10 +1,11 @@
 Router.configure({
-	layoutTemplate: 'layout'
-	
+  layoutTemplate: 'appLayout'
 })
-Router.route('/', function(){
-	
-	this.render('Home', { 
-	data:function() {return true}
-	})
+
+Router.route('/', {
+  template: 'home',
+  waitOn: function() {
+    return Meteor.subscribe('nearbyPlaces', Session.get('bottomLeft'), Session.get('topRight'))
+  },
+  data: function () { return Places.find() }
 })
